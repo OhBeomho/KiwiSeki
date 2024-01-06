@@ -1,0 +1,23 @@
+@import url("./navbar.css");
+
+body {
+  margin: 0;
+}
+
+main {
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+body,
+main {
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  text-align: center;
+  background-color: rgb(120, 120, 120);
+  padding: 20px 0;
+}

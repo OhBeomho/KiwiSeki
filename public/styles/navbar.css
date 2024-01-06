@@ -1,0 +1,16 @@
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav .brand {
+  font-size: 30px;
+  color: black;
+}
+
+nav .items {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
