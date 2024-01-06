@@ -3,10 +3,15 @@ const Wiki = require("../schemas/Wiki");
 const User = require("../schemas/User");
 const router = Router({ caseSensitive: false });
 
-router.get("/", (req, res) => {
-  // TODO: Get 5 recent edited wiki
+router.get("/", async (req, res) => {
+  let recentEdited;
+  try {
+    recentEdited = await Wiki.find({}).sort({ editedTime: -1 }).limit(5);
+  } catch (err) {
+    recentEdited = -1;
+  }
 
-  res.render("index");
+  res.render("index", { recentEdited });
 });
 
 router.get("/profile/:userId", async (req, res) => {
