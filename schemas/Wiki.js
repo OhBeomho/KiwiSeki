@@ -13,7 +13,19 @@ const wikiSchema = new Schema({
     type: Number,
     required: true
   },
-  lastEdit: Schema.Types.Mixed
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
+  editedTime: {
+    type: Number,
+    default: -1
+  },
+  editor: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  }
 });
 
 module.exports = model("Wiki", wikiSchema);
