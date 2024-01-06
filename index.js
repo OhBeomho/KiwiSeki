@@ -15,8 +15,12 @@ app.set("views", "views");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(express.static("public"));
+app.use((req, res, next) => {
+  res.locals.user = req.session.user;
+  next();
+});
 
-// Session settings
 const maxAge = 60 * 60 * 1000;
 app.use(
   session({
