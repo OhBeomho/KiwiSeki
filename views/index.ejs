@@ -5,10 +5,49 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KiwiSekwi</title>
+  <link rel="stylesheet" href="/styles/main.css">
+  <style>
+    /* TODO: Recent edited wiki styles */
+  </style>
 </head>
 
 <body>
   <% include("./components/navbar.ejs") %>
+  <main>
+    <div>
+      <h1>KiwiSekwi</h1>
+      <h3>키위세퀴</h3>
+    </div>
+    <div>
+      <h2>최근 수정</h2>
+      <div class="recent-edited">
+        <% if (recentEdited === -1) { %>
+        <div style="color: gray">
+          최근 수정된 위키를 불러오던 중 오류가 발생하였습니다.
+        </div>
+        <%
+          } else {
+            for (let wiki of recentEdited) {
+        %>
+          <div class="wiki">
+            <div class="title"><%= wiki.title %></div>
+            <div>
+              <div class="editor">
+                <%= wiki.editor || wiki.creator %>
+              </div>
+              <div class="editedTime">
+                <%= wiki.editedTime || wiki.createdTime %>
+              </div>
+            </div>
+          </div>
+        <%
+            }
+          }
+        %>
+      </div>
+    </div>
+  </main>
+  <% include("./components/footer.ejs") %>
 </body>
 
 </html>
