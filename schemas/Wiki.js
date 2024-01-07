@@ -9,22 +9,15 @@ const wikiSchema = new Schema({
     type: String,
     required: true
   },
-  createdTime: {
+  previousContent: String,
+  lastUpdateTime: {
     type: Number,
     required: true
   },
-  creator: {
+  lastUpdateUser: {
     type: Schema.Types.ObjectId,
     ref: "User",
     required: true
-  },
-  editedTime: {
-    type: Number,
-    default: -1
-  },
-  editor: {
-    type: Schema.Types.ObjectId,
-    ref: "User"
   }
 });
 

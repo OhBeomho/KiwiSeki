@@ -27,19 +27,25 @@
         </div>
         <%
           } else {
-            for (let wiki of recentEdited) {
+            if (recentEdited.length) {
+              for (let wiki of recentEdited) {
         %>
-          <div class="wiki">
-            <div class="title"><%= wiki.title %></div>
-            <div>
-              <div class="editor">
-                <%= wiki.editor || wiki.creator %>
-              </div>
-              <div class="editedTime">
-                <%= wiki.editedTime || wiki.createdTime %>
-              </div>
+        <div class="wiki">
+          <div class="title"><%= wiki.title %></div>
+          <div>
+            <div class="last-update-user">
+              <%= wiki.lastUpdateUser.username %>
+            </div>
+            <div class="last-update-time">
+              <%= new Date(wiki.lastUpdateTime).toLocaleString("ko-KR") %>
             </div>
           </div>
+        </div>
+        <%
+              }
+            } else {
+        %>
+        <div>최근에 수정된 위키가 없습니다.</div>
         <%
             }
           }
