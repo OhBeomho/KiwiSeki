@@ -1,12 +1,12 @@
 const { Router } = require("express");
 const Wiki = require("../schemas/Wiki");
 const User = require("../schemas/User");
-const router = Router({ caseSensitive: false });
+const router = Router();
 
 router.get("/", async (req, res) => {
   let recentEdited;
   try {
-    recentEdited = await Wiki.find({}).sort({ editedTime: -1 }).limit(5);
+    recentEdited = await Wiki.find({}).sort([["editedTime", -1], ["createdTime", -1]]).limit(5);
   } catch (err) {
     recentEdited = -1;
   }
