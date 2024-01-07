@@ -10,7 +10,10 @@
 
 <body>
   <% include("./components/navbar.ejs") %>
-  <main></main>
+  <main>
+    <h2><%= user.username %></h2>
+    <p>위키 수정 <%= user.editCount %>회</p>
+  </main>
   <% include("./components/footer.ejs") %>
 </body>
 
