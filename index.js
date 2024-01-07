@@ -3,6 +3,9 @@ const mongoose = require("mongoose");
 mongoose.set("strictQuery", true);
 
 const express = require("express");
+const indexRouter = require("./routers/indexRouter");
+const userRouter = require("./routers/userRouter");
+const wikiRouter = require("./routers/wikiRouter");
 const app = express();
 
 const session = require("express-session");
@@ -20,6 +23,9 @@ app.use((req, res, next) => {
   res.locals.user = req.session.user;
   next();
 });
+app.use("/", indexRouter);
+app.use("/user", userRouter);
+app.use("/wiki", wikiRouter);
 
 const maxAge = 60 * 60 * 1000;
 app.use(
