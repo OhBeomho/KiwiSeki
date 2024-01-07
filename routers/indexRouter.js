@@ -2,11 +2,14 @@ const { Router } = require("express");
 const Wiki = require("../schemas/Wiki");
 const User = require("../schemas/User");
 const router = Router();
+const year = 60 * 60 * 24 * 365 * 1000;
 
 router.get("/", async (req, res) => {
   let recentEdited;
   try {
-    recentEdited = await Wiki.find({}).sort([["editedTime", -1], ["createdTime", -1]]).limit(5);
+    recentEdited = await Wiki.find({ lastUpdateTime: { $gt: new Date().getTime() - year } })
+      .sort([["lastUpdateTime", -1]])
+      .limit(6);
   } catch (err) {
     recentEdited = -1;
   }
@@ -48,13 +51,13 @@ router.get("/signup", (req, res) => {
   res.render("signup");
 });
 
-router.get("/write", (req, res) => {
+router.get("/create", (req, res) => {
   if (!req.session.user) {
     res.redirect("/login");
     return;
   }
 
-  res.render("write");
+  res.render("create");
 });
 
 router.get("/edit/:wikiId", async (req, res) => {
