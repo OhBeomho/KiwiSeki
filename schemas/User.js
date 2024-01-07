@@ -9,7 +9,7 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
-  wikiCount: {
+  editCount: {
     type: Number,
     default: 0
   }
