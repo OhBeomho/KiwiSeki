@@ -13,7 +13,27 @@
   <main>
     <h1>회원가입</h1>
     <form action="/signup" method="post">
-      <!-- TODO: signup form -->
+      <table>
+        <tbody>
+          <tr>
+            <td>사용자명</td>
+            <td>
+              <input type="text" required />
+            </td>
+          </tr>
+          <tr>
+            <td>비밀번호</td>
+            <td>
+              <input type="password" required />
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <input type="submit" value="회원가입">
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </form>
   </main>
   <% include("./components/footer.ejs") %>
