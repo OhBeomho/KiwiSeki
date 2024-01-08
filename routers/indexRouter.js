@@ -97,4 +97,8 @@ router.get("/view/:wikiId", async (req, res) => {
   }
 });
 
+router.get("/search/:searchText", async (req, res) => {
+  // TODO: Get search results
+});
+
 module.exports = router;
