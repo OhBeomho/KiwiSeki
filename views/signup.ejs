@@ -4,15 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KiwiSekwi</title>
+  <title>KiwiSeki</title>
   <link rel="stylesheet" href="/styles/main.css">
+  <link rel="stylesheet" href="/styles/form.css">
 </head>
 
 <body>
-  <% include("./components/navbar.ejs") %>
+  <%- include("components/navbar.ejs") %>
   <main>
     <h1>회원가입</h1>
-    <form action="/signup" method="post">
+    <form action="/user/signup" method="post">
       <table>
         <tbody>
           <tr>
@@ -36,7 +37,7 @@
       </table>
     </form>
   </main>
-  <% include("./components/footer.ejs") %>
+  <%- include("components/footer.ejs") %>
 </body>
 
 </html>

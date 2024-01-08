@@ -1,7 +1,7 @@
 <nav>
-  <a href="/" class="brand">KiwiSekwi</a>
+  <a href="/" class="brand">KiwiSeki</a>
   <div class="items">
-    <% if (user) { %>
+    <% if (loggedUser) { %>
     <a href="/write">위키 생성</a>
     <a href="/profile/<%= loggedUser.id %>">프로필</a>
     <% } else { %>

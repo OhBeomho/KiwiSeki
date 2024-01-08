@@ -4,18 +4,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KiwiSekwi</title>
+  <title>KiwiSeki</title>
   <link rel="stylesheet" href="/styles/main.css">
 </head>
 
 <body>
-  <% include("./components/navbar.ejs") %>
+  <%- include("components/navbar.ejs") %>
   <main>
     <h2>에러 발생</h2>
     <pre style="color: rgb(200, 0, 0)"><%= message %></pre>
     <button onclick="history.back()">뒤로</button>
   </main>
-  <% include("./components/footer.ejs") %>
+  <%- include("components/footer.ejs") %>
 </body>
 
 </html>
