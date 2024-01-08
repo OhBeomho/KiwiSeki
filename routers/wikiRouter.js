@@ -1,8 +1,7 @@
 /*
   TODO
 
-  Post route: /create-request, /edit
-  Get route: /view
+  POST: /create-request, /edit
 */
 const { Router } = require("express");
 const Wiki = require("../schemas/Wiki");
