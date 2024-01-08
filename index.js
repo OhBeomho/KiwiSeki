@@ -19,13 +19,6 @@ app.set("views", "views");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("public"));
-app.use((req, res, next) => {
-  res.locals.loggedUser = req.session.user;
-  next();
-});
-app.use("/", indexRouter);
-app.use("/user", userRouter);
-app.use("/wiki", wikiRouter);
 
 const maxAge = 60 * 60 * 1000;
 app.use(
@@ -37,6 +30,14 @@ app.use(
     cookie: { maxAge }
   })
 );
+app.use((req, res, next) => {
+  res.locals.loggedUser = req.session.user;
+  next();
+});
+
+app.use("/", indexRouter);
+app.use("/user", userRouter);
+app.use("/wiki", wikiRouter);
 
 mongoose
   .connect(
