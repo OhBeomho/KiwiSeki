@@ -97,8 +97,29 @@ router.get("/view/:wikiId", async (req, res) => {
   }
 });
 
-router.get("/search/:searchText", async (req, res) => {
-  // TODO: Get search results
+router.get("/search", async (req, res) => {
+  const { t: searchText, p: page } = req.query;
+
+  try {
+    const result = await Wiki.find({ title: new RegExp(searchText, "i") })
+      .skip((page - 1) * 20)
+      .limit(20);
+    res.render("search", { result });
+  } catch (err) {
+    res.render("error", { message: err.message });
+  }
+});
+
+router.get("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      res.render("error", { message: "로그아웃을 하던 중 에러가 발생하였습니다." });
+      console.log(err);
+      return;
+    }
+
+    res.redirect("/");
+  });
 });
 
 module.exports = router;

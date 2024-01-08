@@ -22,6 +22,8 @@ router.post("/login", async (req, res) => {
       id: user._id,
       username
     };
+
+    res.redirect("/");
   } catch (err) {
     res.render("error", { message: err.message });
   }
@@ -52,10 +54,6 @@ router.post("/signup", async (req, res) => {
   } catch (err) {
     res.render("error", { message: err.message });
   }
-});
-
-router.get("/logout", async (req, res) => {
-  // TODO
 });
 
 module.exports = router;
