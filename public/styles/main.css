@@ -1,13 +1,27 @@
-@import url("./navbar.css");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap");
+@import "navbar.css";
+
+:root {
+  --primary: rgb(80, 210, 60);
+  --secondary: rgb(120, 120, 120);
+}
+
+* {
+  font-family: "Noto Sans KR", sans-serif;
+}
 
 body {
   margin: 0;
+  min-height: 100vh;
 }
 
 main {
   flex: 1;
+  max-width: 600px;
+  width: 95vw;
   justify-content: center;
   align-items: center;
+  align-self: center;
 }
 
 body,
@@ -18,6 +32,6 @@ main {
 
 footer {
   text-align: center;
-  background-color: rgb(120, 120, 120);
+  background-color: var(--secondary);
   padding: 20px 0;
 }
