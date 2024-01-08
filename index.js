@@ -41,6 +41,10 @@ app.use("/wiki", wikiRouter);
 
 mongoose
   .connect(
-    `mongodb+srv://${config.DB_USER}:${config.DB_PASSWORD}@kiwisekwi.fi7kd3b.mongodb.net/?retryWrites=true&w=majority`
+    `mongodb+srv://${config.DB_USER}:${config.DB_PASSWORD}@kiwisekwi.fi7kd3b.mongodb.net/?retryWrites=true&w=majority`,
+    {
+      dbName: config.NODE_ENV,
+      appName: "kiwiseki"
+    }
   )
   .then(() => app.listen(Number(config.PORT), () => console.log("localhost:" + config.PORT)));
