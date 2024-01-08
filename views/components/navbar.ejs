@@ -2,8 +2,9 @@
   <a href="/" class="brand">KiwiSeki</a>
   <div class="items">
     <% if (loggedUser) { %>
-    <a href="/write">위키 생성</a>
+    <a href="/create">위키 생성</a>
     <a href="/profile/<%= loggedUser.id %>">프로필</a>
+    <a href="/logout">로그아웃</a>
     <% } else { %>
     <a href="/login">로그인</a>
     <a href="/signup">회원가입</a>

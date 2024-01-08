@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KiwiSeki</title>
+    <link rel="stylesheet" href="/styles/main.css" />
+  </head>
+  <body>
+    <div>
+      <h1>검색 결과 - <span id="searchText"></span></h1>
+    </div>
+    <div>
+      <form action="/search" method="get">
+        <input type="text" name="t" required />
+        <input type="submit" value="검색" />
+      </form>
+    </div>
+    <div>
+      <!-- TODO: Show search results -->
+    </div>
+
+    <script>
+      const params = new URLSearchParams(location.search);
+      const searchText = params.get("t"),
+        page = params.get("p");
+
+      document.getElementById("searchText").innerText = searchText;
+    </script>
+  </body>
+</html>

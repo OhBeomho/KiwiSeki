@@ -1,3 +1,4 @@
+<!-- Admin only page -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,11 +8,6 @@
     <link rel="stylesheet" href="/styles/main.css" />
   </head>
   <body>
-    <%- include("components/navbar.ejs") %>
-    <main>
-      <h2><%= user.username %></h2>
-      <p>위키 수정 <%= user.editCount %>회</p>
-    </main>
-    <%- include("components/footer.ejs") %>
+    <h1>위키 생성 요청 목록</h1>
   </body>
 </html>

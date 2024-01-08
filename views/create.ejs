@@ -1,19 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KiwiSeki</title>
-  <link rel="stylesheet" href="/styles/main.css">
-</head>
-
-<body>
-  <%- include("./components/navbar.ejs") %>
-  <main>
-    <h1>문서 생성 요청</h1>
-  </main>
-  <%- include("./components/footer.ejs") %>
-</body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KiwiSeki</title>
+    <link rel="stylesheet" href="/styles/main.css" />
+  </head>
+  <body>
+    <%- include("./components/navbar.ejs") %>
+    <main>
+      <h1>위키 생성 요청</h1>
+      <form action="/wiki/create-request" method="post">
+        <p>
+          <label for="title">제목</label>
+          <input type="text" name="title" id="title" placeholder="제목을 입력해 주세요." required />
+        </p>
+        <p>
+          <label for="content">내용</label>
+          <br />
+          <textarea
+            name="content"
+            id="content"
+            rows="15"
+            minlength="30"
+            placeholder="내용을 입력해 주세요."
+            required
+          ></textarea>
+        </p>
+        <p>
+          <input type="submit" value="확인" />
+        </p>
+      </form>
+    </main>
+    <%- include("./components/footer.ejs") %>
+  </body>
 </html>

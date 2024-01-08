@@ -1,67 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KiwiSeki</title>
-  <link rel="stylesheet" href="/styles/main.css">
-  <style>
-    .recent-edited {
-      width: 100%;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(2, auto);
-      gap: 5px;
-    }
-  </style>
-</head>
-
-<body>
-  <%- include("components/navbar.ejs") %>
-  <main>
-    <div>
-      <h1 style="font-size: 50px; color: var(--primary)">KiwiSeki</h1>
-    </div>
-    <div>
-      <!-- TODO: Search bar -->
-    </div>
-    <div>
-      <h2>최근 수정</h2>
-      <% if (recentEdited === -1) { %>
-      <div style="color: gray">
-        최근 수정된 위키를 불러오던 중 오류가 발생하였습니다.
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KiwiSeki</title>
+    <link rel="stylesheet" href="/styles/main.css" />
+    <style>
+      .recent-edited {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, auto);
+        gap: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include("components/navbar.ejs") %>
+    <main>
+      <div>
+        <h1 style="font-size: 50px; color: var(--primary)">KiwiSeki</h1>
       </div>
-      <%
-        } else {
-          if (recentEdited.length) {
-            for (let wiki of recentEdited) {
-      %>
-      <div class="recent-edited">
-        <div class="wiki">
-          <div class="title"><%= wiki.title %></div>
-          <div>
-            <div class="last-update-user">
-              <%= wiki.lastUpdateUser.username %>
-            </div>
-            <div class="last-update-time">
-              <%= new Date(wiki.lastUpdateTime).toLocaleString("ko-KR") %>
+      <div>
+        <form action="/search" method="get">
+          <input type="text" name="t" required />
+          <input type="submit" value="검색" />
+        </form>
+      </div>
+      <div>
+        <h2>최근 수정</h2>
+        <% if (recentEdited === -1) { %>
+        <div style="color: gray">최근 수정된 위키를 불러오던 중 오류가 발생하였습니다.</div>
+        <% } else { if (recentEdited.length) { for (let wiki of recentEdited) { %>
+        <div class="recent-edited">
+          <div class="wiki">
+            <div class="title"><%= wiki.title %></div>
+            <div>
+              <div class="last-update-user"><%= wiki.lastUpdateUser.username %></div>
+              <div class="last-update-time"><%= new Date(wiki.lastUpdateTime).toLocaleString("ko-KR") %></div>
             </div>
           </div>
         </div>
+        <% } } else { %>
+        <div>최근에 수정된 위키가 없습니다.</div>
+        <% } } %>
       </div>
-      <%
-            }
-          } else {
-      %>
-      <div>최근에 수정된 위키가 없습니다.</div>
-      <%
-          }
-        }
-      %>
-    </div>
-  </main>
-  <%- include("components/footer.ejs") %>
-</body>
-
+    </main>
+    <%- include("components/footer.ejs") %>
+  </body>
 </html>
