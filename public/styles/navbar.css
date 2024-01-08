@@ -6,9 +6,12 @@ nav {
   padding: 20px 12px;
 }
 
+nav a {
+  color: white;
+}
+
 nav .brand {
   font-size: 30px;
-  color: black;
 }
 
 nav .items {

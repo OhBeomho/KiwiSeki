@@ -1,8 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap");
 @import "navbar.css";
+@import "form.css";
 
 :root {
-  --primary: rgb(80, 210, 60);
+  --primary: rgb(25, 200, 80);
   --secondary: rgb(120, 120, 120);
 }
 
@@ -34,4 +35,12 @@ footer {
   text-align: center;
   background-color: var(--secondary);
   padding: 20px 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
