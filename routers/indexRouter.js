@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const Wiki = require("../schemas/Wiki");
 const User = require("../schemas/User");
+const RequestWiki = require("../schemas/RequestWiki");
 const router = Router();
 const year = 60 * 60 * 24 * 365 * 1000;
 
@@ -120,6 +121,20 @@ router.get("/logout", (req, res) => {
 
     res.redirect("/");
   });
+});
+
+router.get("/request-list", async (req, res) => {
+  if (!req.session.user || req.session.user.username !== "admin") {
+    res.render("error", { message: "관리자만 볼 수 있는 페이지입니다." });
+    return;
+  }
+
+  try {
+    const requests = await RequestWiki.find({});
+    res.render("requestList", { requests });
+  } catch (err) {
+    res.render("error", { message: err.message });
+  }
 });
 
 module.exports = router;
