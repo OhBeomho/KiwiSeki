@@ -44,3 +44,8 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+img.user {
+  width: 120px;
+  height: 120px;
+}
