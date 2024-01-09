@@ -12,6 +12,10 @@ const userSchema = new Schema({
   editCount: {
     type: Number,
     default: 0
+  },
+  wikiCount: {
+    type: Number,
+    default: 0
   }
 });
 

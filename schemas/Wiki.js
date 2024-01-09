@@ -10,6 +10,15 @@ const wikiSchema = new Schema({
     required: true
   },
   previousContent: String,
+  createdTime: {
+    type: Number,
+    required: true
+  },
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
   lastUpdateTime: {
     type: Number,
     required: true
