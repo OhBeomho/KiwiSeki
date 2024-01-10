@@ -10,7 +10,18 @@ router.patch("/", async (req, res) => {
 
   const { wikiId, title, content } = req.body;
 
-  // TODO: edit wiki
+  try {
+    const wiki = await Wiki.findById(wikiId).orFail(new Error("Wiki not found"));
+    wiki.title = title;
+    wiki.content = content;
+    wiki.lastUpdateTime = new Date().getTime();
+    wiki.lastUpdateUser = req.session.user.id;
+    await wiki.save();
+
+    res.render("info", { message: `위키 '${title}'이 수정되었습니다.`, redirectUrl: `/view/${wikiId}` });
+  } catch (err) {
+    res.render("error", { message: err.message });
+  }
 });
 
 module.exports = router;

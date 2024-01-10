@@ -11,7 +11,13 @@ router.post("/create", async (req, res) => {
 
   const { title, content } = req.body;
 
-  // TODO: Create request
+  await RequestWiki.create({
+    title,
+    content,
+    user: req.session.user.id
+  });
+
+  res.render("info", { message: `새로운 위키 '${title}'에 대한 요청이 등록되었습니다.`, redirectUrl: "/" });
 });
 
 router.get("/accpet/:requestId", async (req, res) => {});

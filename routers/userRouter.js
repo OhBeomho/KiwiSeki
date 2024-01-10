@@ -23,7 +23,7 @@ router.post("/login", async (req, res) => {
       username
     };
 
-    res.redirect("/");
+    res.render("info", { message: "로그인 되었습니다.", redirectUrl: "/" });
   } catch (err) {
     res.render("error", { message: err.message });
   }
@@ -50,7 +50,7 @@ router.post("/signup", async (req, res) => {
       password: passwordHash
     });
 
-    res.redirect("/login");
+    res.render("info", { message: `${username}으로 회원가입 되었습니다.`, redirectUrl: "/login" });
   } catch (err) {
     res.render("error", { message: err.message });
   }
