@@ -71,7 +71,6 @@ router.get("/accept/:requestId", async (req, res) => {
       lastUpdateTime: now
     });
     await User.findByIdAndUpdate(userId, { $inc: { wikiCount: 1 } });
-
     await RequestWiki.findByIdAndDelete(requestId);
 
     res.render("info", { message: `위키 '${title}'에 대한 요청이 수락되었습니다.`, redirectUrl: `/view/${wikiId}` });
@@ -94,7 +93,7 @@ router.get("/reject/:requestId", async (req, res) => {
   }
 
   try {
-    await RequestWiki.findByIdAndDelete(requestId).orFail(new Error("Request not found"));
+    const { title } = await RequestWiki.findByIdAndDelete(requestId).orFail(new Error("Request not found"));
 
     res.render("info", { message: `위키 '${title}'에 대한 요청이 거부되었습니다.`, redirectUrl: `/request-list` });
   } catch (err) {
