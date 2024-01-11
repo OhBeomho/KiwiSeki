@@ -12,8 +12,6 @@ const app = express();
 const session = require("express-session");
 const MemoryStore = require("memorystore")(session);
 
-const config = require("./config");
-
 app.set("view engine", "ejs");
 app.set("views", "views");
 
@@ -24,7 +22,7 @@ app.use(express.static("public"));
 const maxAge = 60 * 60 * 1000;
 app.use(
   session({
-    secret: config.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     store: new MemoryStore({ checkPeriod: maxAge }),
@@ -43,10 +41,10 @@ app.use("/request", reqeustRouter);
 
 mongoose
   .connect(
-    `mongodb+srv://${config.DB_USER}:${config.DB_PASSWORD}@kiwisekwi.fi7kd3b.mongodb.net/?retryWrites=true&w=majority`,
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@kiwisekwi.fi7kd3b.mongodb.net/?retryWrites=true&w=majority`,
     {
-      dbName: config.NODE_ENV,
+      dbName: process.env.NODE_ENV,
       appName: "kiwiseki"
     }
   )
-  .then(() => app.listen(Number(config.PORT), () => console.log("localhost:" + config.PORT)));
+  .then(() => app.listen(Number(process.env.PORT), () => console.log("localhost:" + config.PORT)));

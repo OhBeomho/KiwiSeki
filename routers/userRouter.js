@@ -1,7 +1,6 @@
 const { Router } = require("express");
 const User = require("../schemas/User");
 const bcrypt = require("bcrypt");
-const config = require("../config");
 const router = Router();
 
 router.post("/login", async (req, res) => {
@@ -42,7 +41,7 @@ router.post("/signup", async (req, res) => {
       throw new Error("이미 사용된 사용자명입니다.");
     }
 
-    const salt = await bcrypt.genSalt(Number(config.SALT_ROUNDS));
+    const salt = await bcrypt.genSalt(15);
     const passwordHash = await bcrypt.hash(password, salt);
 
     await User.create({
