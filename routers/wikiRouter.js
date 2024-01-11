@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const Wiki = require("../schemas/Wiki");
+const User = require("../schemas/User");
 const router = Router();
 
 router.post("/edit", async (req, res) => {
@@ -11,14 +12,18 @@ router.post("/edit", async (req, res) => {
   const { wikiId, content } = req.body;
 
   try {
-    const wiki = await Wiki.findById(wikiId).orFail(new Error("Wiki not found"));
+    const wiki = await Wiki.findByIdAndUpdate(wikiId).orFail(new Error("Wiki not found"));
+    wiki.previousContent = wiki.content;
     wiki.content = content;
     wiki.lastUpdateTime = new Date().getTime();
     wiki.lastUpdateUser = req.session.user.id;
     await wiki.save();
 
-    res.render("info", { message: `위키 '${title}'(이)가 수정되었습니다.`, redirectUrl: `/view/${wikiId}` });
+    await User.findByIdAndUpdate(req.session.user.id, { $inc: { editCount: 1 } });
+
+    res.render("info", { message: `위키 '${wiki.title}'(이)가 수정되었습니다.`, redirectUrl: `/view/${wikiId}` });
   } catch (err) {
+    console.log(err);
     res.render("error", { message: err.message });
   }
 });

@@ -55,19 +55,22 @@ router.get("/accept/:requestId", async (req, res) => {
   }
 
   try {
-    const { title, content, user } = await RequestWiki.findById(requestId)
-      .populate("user")
-      .orFail(new Error("Request not found"));
+    const {
+      title,
+      content,
+      user: userId
+    } = await RequestWiki.findById(requestId).orFail(new Error("Request not found"));
     const now = new Date().getTime();
 
     const { _id: wikiId } = await Wiki.create({
       title,
       content,
-      creator: user._id,
+      creator: userId,
       createdTime: now,
       lastUpdateUser: req.session.user.id,
       lastUpdateTime: now
     });
+    await User.findByIdAndUpdate(userId, { $inc: { wikiCount: 1 } });
 
     await RequestWiki.findByIdAndDelete(requestId);
 

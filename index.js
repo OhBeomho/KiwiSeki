@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const mongoose = require("mongoose");
 
 mongoose.set("strictQuery", true);
@@ -9,8 +11,15 @@ const wikiRouter = require("./routers/wikiRouter");
 const reqeustRouter = require("./routers/requestRouter");
 const app = express();
 
+const fs = require("@cyclic.sh/s3fs");
+if (!fs.existsSync("sessions.db")) {
+  fs.writeFileSync("sessions.db", "");
+}
+
 const session = require("express-session");
-const MemoryStore = require("memorystore")(session);
+const sqlite = require("better-sqlite3");
+const SqliteStore = require("better-sqlite3-session-store")(session);
+const db = new sqlite("sessions.db", { verbose: console.log });
 
 app.set("view engine", "ejs");
 app.set("views", "views");
@@ -19,14 +28,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static("public"));
 
-const maxAge = 60 * 60 * 1000;
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
-    store: new MemoryStore({ checkPeriod: maxAge }),
-    cookie: { maxAge }
+    store: new SqliteStore({
+      client: db,
+      expired: {
+        clear: true,
+        intervalMs: 60 * 60 * 1000
+      }
+    })
   })
 );
 app.use((req, res, next) => {
