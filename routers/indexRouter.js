@@ -82,6 +82,31 @@ router.get("/edit/:wikiId", async (req, res) => {
   }
 });
 
+router.get("/request-edit/:requestId", async (req, res) => {
+  if (!req.session.user) {
+    res.redirect("/login");
+    return;
+  }
+
+  const { requestId } = req.params;
+
+  if (!requestId) {
+    res.render("error", { message: "편집하려는 위키 요청의 ID가 주어지지 않았습니다." });
+    return;
+  }
+
+  try {
+    const request = await RequestWiki.findById(requestId).populate("user").orFail(new Error("Reqeust not found"));
+    if (request.user.username !== req.session.user.username) {
+      throw new Error("위키 요청은 요청을 만든 사람만 편집할 수 있습니다.");
+    }
+
+    res.render("edit", { request });
+  } catch (err) {
+    res.render("error", { message: err.message });
+  }
+});
+
 router.get("/view/:wikiId", async (req, res) => {
   const { wikiId } = req.params;
 
