@@ -4,12 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KiwiSeki</title>
-    <link rel="stylesheet" href="styles/main.css" />
+    <link rel="stylesheet" href="/styles/main.css" />
     <style>
       .info {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding-bottom: 4px;
+        border-bottom: 2px solid var(--secondary);
       }
 
       .info,
@@ -24,21 +26,22 @@
       <h3>위키 요청</h3>
       <h1><%= request.title %></h1>
       <div class="info">
-        <div><b><%= request.user.username %></b>(이)가 요청</div>
-        <% if (request.user.username === loggedUser.username) { %>
+        <div>
+          <a href="/profile/<%= request.user._id %>"><b><%= request.user.username %></b></a
+          >(이)가 요청
+        </div>
+        <% if (loggedUser && request.user.username === loggedUser.username) { %>
         <div>
           <button onclick="location.assign('/request-edit/<%= request._id %>')">수정</button>
         </div>
-        <% } %> <% if (request.user.username === "admin") { %>
+        <% } %> <% if (loggedUser && loggedUser.username === "admin") { %>
         <div>
           <button onclick="location.assign('/request/accept/<%= request._id %>')">위키 요청 수락</button>
           <button onclick="location.assign('/request/reject/<%= request._id %>')">위키 요청 거부</button>
         </div>
         <% } %>
       </div>
-      <pre class="content">
-        <%= request.content %>
-      </pre>
+      <pre class="content"><%= request.content %></pre>
     </main>
     <%- include("components/footer.ejs") %>
   </body>

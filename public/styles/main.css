@@ -23,6 +23,7 @@ main {
   justify-content: center;
   align-items: center;
   align-self: center;
+  gap: 15px;
 }
 
 body,
@@ -48,4 +49,8 @@ a:hover {
 img.user {
   width: 120px;
   height: 120px;
+}
+
+.date {
+  color: var(--secondary);
 }

@@ -8,7 +8,20 @@
   </head>
   <body>
     <%- include("components/navbar.ejs") %>
-    <main></main>
+    <main>
+      <form action="/wiki/edit" method="post">
+        <h3>위키 수정</h3>
+        <h1><%= wiki.title %></h1>
+        <p>
+          <label for="content">내용</label><br />
+          <textarea name="content" id="content" rows="15" minlength="30" required><%= wiki.content %></textarea>
+        </p>
+        <p>
+          <input type="submit" value="확인" />
+        </p>
+        <input type="hidden" name="wikiId" value="<%= wiki._id %>" />
+      </form>
+    </main>
     <%- include("components/footer.ejs") %>
   </body>
 </html>

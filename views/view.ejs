@@ -10,6 +10,8 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding-bottom: 4px;
+        border-bottom: 2px solid var(--secondary);
       }
 
       .info,
@@ -25,25 +27,39 @@
       <h1><%= wiki.title %></h1>
       <div class="info">
         <div>
-          <b><%= wiki.creator.username %></b> <%= new Date(wiki.createdTime).toLocaleString("ko-KR") %>에 생성됨<br />
-          <%= new Date(wiki.lastUpdateTime).toLocaleString("ko-KR") %>에 <%= wiki.lastUpdateUser.username %>(이)가
-          마지막으로 편집
+          <a href="/profile/<%= wiki.creator._id %>"><b><%= wiki.creator.username %></b></a>
+          <span class="date"><%= new Date(wiki.createdTime).toLocaleString("ko-KR") %></span>에 생성됨<br />
+          <span class="date"><%= new Date(wiki.lastUpdateTime).toLocaleString("ko-KR") %></span>에
+          <a href="/profile/<%= wiki.lastUpdateUser._id %>"><%= wiki.lastUpdateUser.username %></a>(이)가 마지막으로
+          수정
         </div>
         <div>
-          <button onclick="location.assign('/edit/<%= request._id %>')">수정</button>
+          <button onclick="location.assign('/edit/<%= wiki._id %>')">수정</button>
         </div>
       </div>
-      <pre class="content">
-        <%= request.content %>
-      </pre>
-      <button onclick="showPrevious()">이전 내용 보기</button>
+      <pre class="content"><%= wiki.content %></pre>
+      <% if (wiki.previousContent) { %>
+      <button onclick="showDialog()">이전 내용 보기</button>
+      <% } %>
     </main>
     <%- include("components/footer.ejs") %>
-    <!-- TODO: Show previous content -->
-    <dialog id="previous"></dialog>
+    <dialog id="previous">
+      <h3>이전 내용</h3>
+      <h1><%= wiki.title %></h1>
+      <pre class="content"><%= wiki.previousContent %></pre>
+      <button onclick="closeDialog()">닫기</button>
+    </dialog>
 
     <script>
-      function showPrevious() {}
+      const dialog = document.getElementById("previous");
+
+      function showDialog() {
+        dialog.showModal();
+      }
+
+      function closeDialog() {
+        dialog.close();
+      }
     </script>
   </body>
 </html>

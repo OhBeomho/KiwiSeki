@@ -5,27 +5,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KiwiSeki</title>
     <link rel="stylesheet" href="/styles/main.css" />
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td,
+      table {
+        border: 1px solid black;
+      }
+
+      th:nth-child(1),
+      td:nth-child(1) {
+        width: 70%;
+      }
+
+      th:nth-child(2),
+      td:nth-child(2) {
+        width: 30%;
+      }
+
+      td {
+        text-align: center;
+      }
+
+      th {
+        background-color: lightgray;
+      }
+
+      .page {
+        margin: 0 10px;
+      }
+    </style>
   </head>
   <body>
-    <div>
-      <h1>검색 결과 - <span id="searchText"></span></h1>
-    </div>
-    <div>
-      <form action="/search" method="get">
-        <input type="text" name="t" required />
-        <input type="submit" value="검색" />
-      </form>
-    </div>
-    <div>
-      <!-- TODO: Show search results -->
-    </div>
+    <%- include("components/navbar.ejs") %>
+    <main>
+      <div>
+        <h1>검색 결과 - <span id="searchText"></span></h1>
+      </div>
+      <div>
+        <form action="/search" method="get">
+          <input type="text" name="t" required />
+          <input type="submit" value="검색" />
+        </form>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>제목</th>
+            <th>마지막 수정 시간</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+        <% if (results.length) { for (let result of results) { %>
+        <tr>
+          <td>
+            <a class="result" href="/view/<%= result._id %>"> <%= result.title %> </a>
+          </td>
+          <td>
+            <span class="date"><%= new Date(result.lastUpdateTime).toLocaleString("ko-KR") %></span>
+          </td>
+        </tr>
+        <% } } else { %>
+        <tr style="color: var(--secondary)">
+          <td colspan="2">검색 결과가 없습니다.</td>
+        </tr>
+        <% } %>
+      </table>
+      <div>
+        <button id="previousPage">이전 페이지</button>
+        <span class="page"></span>
+        <button id="nextPage">다음 페이지</button>
+      </div>
+    </main>
+    <%- include("components/footer.ejs") %>
 
     <script>
       const params = new URLSearchParams(location.search);
       const searchText = params.get("t"),
-        page = params.get("p");
+        page = params.get("p") || 1;
+      const nextPageButton = document.getElementById("nextPage"),
+        previousPageButton = document.getElementById("previousPage");
 
       document.getElementById("searchText").innerText = searchText;
+      document.querySelector(".page").innerText = page + "페이지";
+      document.querySelector("input[type='text']").value = searchText;
+
+      if (page === 1) previousPageButton.disabled = true;
+      if (Array.from(document.querySelectorAll(".result")).length < 20) nextPageButton.disabled = true;
+
+      previousPageButton.addEventListener("click", () =>
+        location.assign(`/search?t=${encodeURIComponent(searchText)}&p=${page - 1}`)
+      );
+      nextPageButton.addEventListener("click", () =>
+        location.assign(`/search?t=${encodeURIComponent(searchText)}&p=${page + 1}`)
+      );
     </script>
   </body>
 </html>

@@ -6,6 +6,7 @@ const express = require("express");
 const indexRouter = require("./routers/indexRouter");
 const userRouter = require("./routers/userRouter");
 const wikiRouter = require("./routers/wikiRouter");
+const reqeustRouter = require("./routers/requestRouter");
 const app = express();
 
 const session = require("express-session");
@@ -38,6 +39,7 @@ app.use((req, res, next) => {
 app.use("/", indexRouter);
 app.use("/user", userRouter);
 app.use("/wiki", wikiRouter);
+app.use("/request", reqeustRouter);
 
 mongoose
   .connect(

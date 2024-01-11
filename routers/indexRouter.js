@@ -9,7 +9,8 @@ router.get("/", async (req, res) => {
   let recentEdited;
   try {
     recentEdited = await Wiki.find({ lastUpdateTime: { $gt: new Date().getTime() - year } })
-      .sort([["lastUpdateTime", -1]])
+      .sort([["lastUpdateTime", "desc"]])
+      .populate("lastUpdateUser")
       .limit(6);
   } catch (err) {
     recentEdited = -1;
@@ -101,7 +102,7 @@ router.get("/request-edit/:requestId", async (req, res) => {
       throw new Error("위키 요청은 요청을 만든 사람만 편집할 수 있습니다.");
     }
 
-    res.render("edit", { request });
+    res.render("requestEdit", { request });
   } catch (err) {
     res.render("error", { message: err.message });
   }
@@ -126,13 +127,14 @@ router.get("/view/:wikiId", async (req, res) => {
 });
 
 router.get("/search", async (req, res) => {
-  const { t: searchText, p: page } = req.query;
+  const { t: searchText, p: page = 1 } = req.query;
 
   try {
-    const result = await Wiki.find({ title: new RegExp(searchText, "i") })
+    const results = await Wiki.find({ title: new RegExp(searchText, "i") })
+      .sort([["lastUpdateTime", "desc"]])
       .skip((page - 1) * 20)
       .limit(20);
-    res.render("search", { result });
+    res.render("search", { results });
   } catch (err) {
     res.render("error", { message: err.message });
   }
@@ -169,7 +171,7 @@ router.get("/request-view/:requestId", async (req, res) => {
 
   try {
     const request = await RequestWiki.findById(requestId).populate("user").orFail(new Error("Reqeust not found"));
-    res.render("reqeustView", { request });
+    res.render("requestView", { request });
   } catch (err) {
     res.render("error", { message: err.message });
   }

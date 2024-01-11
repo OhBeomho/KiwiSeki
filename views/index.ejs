@@ -13,6 +13,28 @@
         grid-template-rows: repeat(2, auto);
         gap: 5px;
       }
+
+      .wiki {
+        color: black;
+        padding: 4px;
+      }
+
+      .wiki:hover {
+        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2);
+        text-decoration: none;
+      }
+
+      .title {
+        font-size: 18px;
+      }
+
+      .last-update-user {
+        font-size: 14px;
+      }
+
+      .last-update-time {
+        font-size: 12px;
+      }
     </style>
   </head>
   <body>
@@ -21,6 +43,7 @@
       <div>
         <h1 style="font-size: 50px; color: var(--primary)">KiwiSeki</h1>
       </div>
+      <div>누구나 편집할 수 있는 위키</div>
       <div>
         <form action="/search" method="get">
           <input type="text" name="t" required />
@@ -31,20 +54,25 @@
         <h2>최근 수정</h2>
         <% if (recentEdited === -1) { %>
         <div style="color: gray">최근 수정된 위키를 불러오던 중 오류가 발생하였습니다.</div>
-        <% } else { if (recentEdited.length) { for (let wiki of recentEdited) { %>
+        <% } else { if (recentEdited.length) { %>
         <div class="recent-edited">
-          <div class="wiki">
-            <div class="title"><%= wiki.title %></div>
+          <% for (let wiki of recentEdited) { %>
+          <a class="wiki" href="/view/<%= wiki._id %>">
+            <div class="title"><b><%= wiki.title %></b></div>
             <div>
-              <div class="last-update-user"><%= wiki.lastUpdateUser.username %></div>
-              <div class="last-update-time"><%= new Date(wiki.lastUpdateTime).toLocaleString("ko-KR") %></div>
+              <div class="last-update-user">마지막 수정 - <%= wiki.lastUpdateUser.username %></div>
+              <div class="last-update-time">
+                <span class="date"><%= new Date(wiki.lastUpdateTime).toLocaleString("ko-KR") %></span>
+              </div>
             </div>
-          </div>
+          </a>
+          <% } %>
         </div>
-        <% } } else { %>
+        <% } else { %>
         <div>최근에 수정된 위키가 없습니다.</div>
         <% } } %>
       </div>
+      <button onclick="location.assign('/request-list')">위키 요청 목록 보기</button>
     </main>
     <%- include("components/footer.ejs") %>
   </body>

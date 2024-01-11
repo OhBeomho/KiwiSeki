@@ -5,20 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KiwiSeki</title>
     <link rel="stylesheet" href="/styles/main.css" />
-    <!-- TODO: .request style -->
-    <style></style>
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td,
+      table {
+        border: 1px solid black;
+      }
+
+      th:nth-child(1),
+      td:nth-child(1) {
+        width: 70%;
+      }
+
+      th:nth-child(2),
+      td:nth-child(2) {
+        width: 30%;
+      }
+
+      td {
+        text-align: center;
+      }
+
+      th {
+        background-color: lightgray;
+      }
+    </style>
   </head>
   <body>
     <%- include("components/navbar.ejs") %>
-    <h1>위키 생성 요청 목록</h1>
-    <div class="request-list">
-      <% for (let request of requests) { %>
-      <a class="request" href="/request-view/<%= request._id %>">
-        <div class="title"><%= request.title %></div>
-        <div class="user"><%= request.user.username %></div>
-      </a>
-      <% } %>
-    </div>
+    <main>
+      <h1>위키 생성 요청 목록</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>위키 제목</th>
+            <th>요청자</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (requests.length) { for (let request of requests) { %>
+          <tr>
+            <td>
+              <a href="/request-view/<%= request._id %>"> <%= request.title %> </a>
+            </td>
+            <td>
+              <a href="/profile/<%= request.user._id %>"><%= request.user.username %></a>
+            </td>
+          </tr>
+          <% } } else { %>
+          <tr>
+            <td colspan="2" style="color: var(--secondary)">위키 요청이 없습니다.</td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+      <div class="request-list"></div>
+    </main>
     <%- include("components/footer.ejs") %>
   </body>
 </html>

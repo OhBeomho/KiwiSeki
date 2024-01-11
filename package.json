@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "node --watch index.js"
   },
   "keywords": [],
   "author": "",
@@ -19,8 +19,5 @@
     "express-session": "^1.17.3",
     "memorystore": "^1.6.7",
     "mongoose": "^8.0.3"
-  },
-  "devDependencies": {
-    "nodemon": "^3.0.2"
   }
 }

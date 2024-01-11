@@ -1,3 +1,13 @@
 form {
+  width: 100%;
   text-align: center;
+}
+
+form table {
+  margin: auto;
+}
+
+form textarea {
+  padding: 2px;
+  width: calc(100% - 4px);
 }
