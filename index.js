@@ -47,4 +47,4 @@ mongoose
       appName: "kiwiseki"
     }
   )
-  .then(() => app.listen(Number(process.env.PORT), () => console.log("localhost:" + config.PORT)));
+  .then(() => app.listen(Number(process.env.PORT), () => console.log("localhost:" + process.env.PORT)));
