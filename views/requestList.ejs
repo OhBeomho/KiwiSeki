@@ -1,4 +1,3 @@
-<!-- Admin only page -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,8 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KiwiSeki</title>
     <link rel="stylesheet" href="/styles/main.css" />
+    <!-- TODO: .request style -->
+    <style></style>
   </head>
   <body>
+    <%- include("components/navbar.ejs") %>
     <h1>위키 생성 요청 목록</h1>
+    <div class="request-list">
+      <% for (let request of requests) { %>
+      <a class="request" href="/request-view/<%= request._id %>">
+        <div class="title"><%= request.title %></div>
+        <div class="user"><%= request.user.username %></div>
+      </a>
+      <% } %>
+    </div>
+    <%- include("components/footer.ejs") %>
   </body>
 </html>

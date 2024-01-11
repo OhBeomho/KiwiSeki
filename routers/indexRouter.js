@@ -91,7 +91,9 @@ router.get("/view/:wikiId", async (req, res) => {
   }
 
   try {
-    const wiki = await Wiki.findById(wikiId).orFail(new Error("Wiki not found"));
+    const wiki = await Wiki.findById(wikiId)
+      .populate(["creator", "lastUpdateUser"])
+      .orFail(new Error("Wiki not found"));
     res.render("view", { wiki });
   } catch (err) {
     res.render("error", { message: err.message });
@@ -124,14 +126,25 @@ router.get("/logout", (req, res) => {
 });
 
 router.get("/request-list", async (req, res) => {
-  if (!req.session.user || req.session.user.username !== "admin") {
-    res.render("error", { message: "관리자만 볼 수 있는 페이지입니다." });
+  try {
+    const requests = await RequestWiki.find({}).populate("user");
+    res.render("requestList", { requests });
+  } catch (err) {
+    res.render("error", { message: err.message });
+  }
+});
+
+router.get("/request-view/:requestId", async (req, res) => {
+  const { requestId } = req.params;
+
+  if (!requestId) {
+    res.render("error", { message: "읽으려는 위키 요청의 ID가 주어지지 않았습니다." });
     return;
   }
 
   try {
-    const requests = await RequestWiki.find({});
-    res.render("requestList", { requests });
+    const request = await RequestWiki.findById(requestId).populate("user").orFail(new Error("Reqeust not found"));
+    res.render("reqeustView", { request });
   } catch (err) {
     res.render("error", { message: err.message });
   }
