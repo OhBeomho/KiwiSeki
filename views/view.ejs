@@ -5,13 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>KiwiSeki</title>
     <link rel="stylesheet" href="/styles/main.css" />
+    <style>
+      .info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .info,
+      .content {
+        width: 100%;
+      }
+    </style>
   </head>
 
   <body>
     <%- include("components/navbar.ejs") %>
     <main>
       <h1><%= wiki.title %></h1>
+      <div class="info">
+        <div>
+          <b><%= wiki.creator.username %></b> <%= new Date(wiki.createdTime).toLocaleString("ko-KR") %>에 생성됨<br />
+          <%= new Date(wiki.lastUpdateTime).toLocaleString("ko-KR") %>에 <%= wiki.lastUpdateUser.username %>(이)가
+          마지막으로 편집
+        </div>
+        <div>
+          <button onclick="location.assign('/edit/<%= request._id %>')">수정</button>
+        </div>
+      </div>
+      <pre class="content">
+        <%= request.content %>
+      </pre>
+      <button onclick="showPrevious()">이전 내용 보기</button>
     </main>
     <%- include("components/footer.ejs") %>
+    <!-- TODO: Show previous content -->
+    <dialog id="previous"></dialog>
+
+    <script>
+      function showPrevious() {}
+    </script>
   </body>
 </html>
