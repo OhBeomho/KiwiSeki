@@ -19,7 +19,7 @@ if (!fs.existsSync("sessions.db")) {
 const session = require("express-session");
 const sqlite = require("better-sqlite3");
 const SqliteStore = require("better-sqlite3-session-store")(session);
-const db = new sqlite("sessions.db", { verbose: console.log });
+const db = new sqlite("sessions.db", { verbose: console.log, readonly: false });
 
 app.set("view engine", "ejs");
 app.set("views", "views");
