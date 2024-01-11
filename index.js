@@ -11,7 +11,7 @@ const wikiRouter = require("./routers/wikiRouter");
 const reqeustRouter = require("./routers/requestRouter");
 const app = express();
 
-const fs = require("@cyclic.sh/s3fs")(process.env.S3_BUCKET_NAME);
+const fs = require("fs");
 if (!fs.existsSync("sessions.db")) {
   fs.writeFileSync("sessions.db", "");
 }
