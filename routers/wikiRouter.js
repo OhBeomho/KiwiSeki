@@ -23,7 +23,6 @@ router.post("/edit", async (req, res) => {
 
     res.render("info", { message: `위키 '${wiki.title}'(이)가 수정되었습니다.`, redirectUrl: `/view/${wikiId}` });
   } catch (err) {
-    console.log(err);
     res.render("error", { message: err.message });
   }
 });
