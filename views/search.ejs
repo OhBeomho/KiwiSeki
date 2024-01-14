@@ -66,7 +66,7 @@
             <a class="result" href="/view/<%= result._id %>"> <%= result.title %> </a>
           </td>
           <td>
-            <span class="date"><%= new Date(result.lastUpdateTime).toLocaleString("ko-KR") %></span>
+            <span class="secondary"><%= new Date(result.lastUpdateTime).toLocaleString("ko-KR") %></span>
           </td>
         </tr>
         <% } } else { %>
