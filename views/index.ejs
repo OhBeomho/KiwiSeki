@@ -60,9 +60,13 @@
           <a class="wiki" href="/view/<%= wiki._id %>">
             <div class="title"><b><%= wiki.title %></b></div>
             <div>
-              <div class="last-update-user">마지막 수정 - <%= wiki.lastUpdateUser.username %></div>
+              <div class="last-update-user">
+                마지막 수정 - <% if (wiki.lastUpdateUser) { %> <%= wiki.lastUpdateUser.username %> <% } else { %>
+                <span class="secondary">[deleted]</span>
+                <% } %>
+              </div>
               <div class="last-update-time">
-                <span class="date"><%= new Date(wiki.lastUpdateTime).toLocaleString("ko-KR") %></span>
+                <span class="secondary"><%= new Date(wiki.lastUpdateTime).toLocaleString("ko-KR") %></span>
               </div>
             </div>
           </a>

@@ -27,8 +27,11 @@
       <h1><%= request.title %></h1>
       <div class="info">
         <div>
-          <a href="/profile/<%= request.user._id %>"><b><%= request.user.username %></b></a
-          >(이)가 요청
+          <% if (request.user) { %>
+          <a href="/profile/<%= request.user._id %>"><b><%= request.user.username %></b></a>
+          <% } else { %>
+          <span class="secondary">[deleted]</span>
+          <% } %>(이)가 요청
         </div>
         <% if (loggedUser && request.user.username === loggedUser.username) { %>
         <div>

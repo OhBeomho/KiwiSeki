@@ -54,12 +54,16 @@
               <a href="/request-view/<%= request._id %>"> <%= request.title %> </a>
             </td>
             <td>
+              <% if (request.user) { %>
               <a href="/profile/<%= request.user._id %>"><%= request.user.username %></a>
+              <% } else { %>
+              <span class="secondary">[deleted]</span>
+              <% } %>
             </td>
           </tr>
           <% } } else { %>
           <tr>
-            <td colspan="2" style="color: var(--secondary)">위키 요청이 없습니다.</td>
+            <td colspan="2" class="secondary">위키 요청이 없습니다.</td>
           </tr>
           <% } %>
         </tbody>

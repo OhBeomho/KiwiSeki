@@ -27,11 +27,18 @@
       <h1><%= wiki.title %></h1>
       <div class="info">
         <div>
+          <% if(wiki.creator) { %>
           <a href="/profile/<%= wiki.creator._id %>"><b><%= wiki.creator.username %></b></a>
-          <span class="date"><%= new Date(wiki.createdTime).toLocaleString("ko-KR") %></span>에 생성됨<br />
-          <span class="date"><%= new Date(wiki.lastUpdateTime).toLocaleString("ko-KR") %></span>에
-          <a href="/profile/<%= wiki.lastUpdateUser._id %>"><%= wiki.lastUpdateUser.username %></a>(이)가 마지막으로
-          수정
+          <% } else { %>
+          <span class="secondary">[deleted]</span>
+          <% } %>
+          <span class="secondary"><%= new Date(wiki.createdTime).toLocaleString("ko-KR") %></span>에 생성됨<br />
+          <span class="secondary"><%= new Date(wiki.lastUpdateTime).toLocaleString("ko-KR") %></span>에 <%
+          if(wiki.lastUpdateUser) { %>
+          <a href="/profile/<%= wiki.lastUpdateUser._id %>"><%= wiki.lastUpdateUser.username %></a>
+          <% } else { %>
+          <span class="secondary">[deleted]</span>
+          <% } %>(이)가 마지막으로 수정
         </div>
         <div>
           <button onclick="location.assign('/edit/<%= wiki._id %>')">수정</button>
