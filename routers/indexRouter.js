@@ -130,7 +130,7 @@ router.get("/search", async (req, res) => {
   const { t: searchText, p: page = 1 } = req.query;
 
   try {
-    const results = await Wiki.find({ title: new RegExp(searchText, "i") })
+    const results = await Wiki.find(searchText ? { title: new RegExp(searchText, "i") } : {})
       .sort([["lastUpdateTime", "desc"]])
       .skip((page - 1) * 20)
       .limit(20);

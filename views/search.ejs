@@ -44,11 +44,11 @@
     <%- include("components/navbar.ejs") %>
     <main>
       <div>
-        <h1>검색 결과 - <span id="searchText"></span></h1>
+        <h1>검색 결과 - '<span id="searchText"></span>'</h1>
       </div>
       <div>
         <form action="/search" method="get">
-          <input type="text" name="t" required />
+          <input type="text" name="t" />
           <input type="submit" value="검색" />
         </form>
       </div>
